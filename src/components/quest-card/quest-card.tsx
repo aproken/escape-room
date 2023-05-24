@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../types/const';
+
 function QuestCard (): JSX.Element {
   return (
     <div className="quest-card">
@@ -9,7 +12,7 @@ function QuestCard (): JSX.Element {
       </div>
       <div className="quest-card__content">
         <div className="quest-card__info-wrapper">
-          <a className="quest-card__link" href="quest.html">Склеп</a>
+          <Link className="quest-card__link" to={AppRoute.Quest}>Склеп</Link>
         </div>
         <ul className="tags quest-card__tags">
           <li className="tags__item">

@@ -1,7 +1,7 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
-function Favorites (): JSX.Element {
+function Reservation (): JSX.Element {
   return (
     <div className="wrapper">
       <Header />
@@ -96,4 +96,4 @@ function Favorites (): JSX.Element {
   );
 }
 
-export default Favorites;
+export default Reservation;
