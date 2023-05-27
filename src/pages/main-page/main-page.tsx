@@ -1,7 +1,13 @@
-import CardsGrid from '../../components/cards-grid/cards-grid';
+import QuestsList from '../../components/quests-list/quests-list';
 import Filter from '../../components/filter/filter';
+import { Quests } from '../../types/quest';
 
-function MainPage (): JSX.Element {
+type MainPageProps = {
+  quests: Quests;
+}
+
+function MainPage ({ quests }: MainPageProps): JSX.Element {
+
   return (
     <main className="page-content">
       <div className="container">
@@ -14,7 +20,7 @@ function MainPage (): JSX.Element {
           <Filter />
         </div>
         <h2 className="title visually-hidden">Выберите квест</h2>
-        <CardsGrid />
+        <QuestsList quests={ quests }/>
       </div>
     </main>
   );

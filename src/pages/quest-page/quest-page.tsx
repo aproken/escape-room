@@ -1,3 +1,5 @@
+// import { QuestInfo } from '../../types/quest-info';
+
 function QuestPage (): JSX.Element {
   return (
     <main className="decorated-page quest-page">
