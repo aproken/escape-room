@@ -2,19 +2,22 @@ import { store } from '../store/index';
 import { AuthorizationStatus } from '../const';
 import { UserData } from './user-data';
 import { Quests } from './quest';
-import { QuestInfo } from './quest-info';
+import { QuestDescription } from './quest-description';
 import { Places } from './place';
 
 export type QuestProcess = {
   questsList: Quests;
-  currentQuest: QuestInfo | null;
   isQuestsListCompleting: boolean;
+}
+
+export type QuestData = {
+  currentQuest: QuestDescription | null;
   isCurrentQuestCompleting: boolean;
 }
 
 export type BookingProcess = {
-  places: Places;
-  isBookingCompleting: boolean;
+  placesList: Places;
+  isPlacesListCompleting: boolean;
   addBookingIsSuccess: boolean;
 }
 

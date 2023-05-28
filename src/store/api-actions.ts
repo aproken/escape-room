@@ -8,7 +8,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { BookingData } from '../types/booking-data';
 import { Quests } from '../types/quest';
-import { QuestInfo } from '../types/quest-info';
+import { QuestDescription } from '../types/quest-description';
 import { Places } from '../types/place';
 import { Reservation } from '../types/reservation';
 //import { ReservationStatus } from '../types/reservation-data';
@@ -28,7 +28,7 @@ export const fetchQuestsListAction = createAsyncThunk<Quests, undefined, {
 );
 
 //Получение информации о квесте
-export const fetchCurrentQuestAction = createAsyncThunk<QuestInfo | null, string, {
+export const fetchCurrentQuestAction = createAsyncThunk<QuestDescription | null, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -37,7 +37,7 @@ export const fetchCurrentQuestAction = createAsyncThunk<QuestInfo | null, string
   'quest/fetchCurrentQuest',
   async(id, { dispatch, extra: api }) => {
     try {
-      const { data } = await api.get<QuestInfo>(`${ APIRoute.CurrentQuest }/${ id }`);
+      const { data } = await api.get<QuestDescription>(`${ APIRoute.CurrentQuest }/${ id }`);
       return data;
     } catch (error) {
       dispatch(redirectToRoute(AppRoute.NotFound));
@@ -47,15 +47,15 @@ export const fetchCurrentQuestAction = createAsyncThunk<QuestInfo | null, string
 );
 
 //Получение массива мест (place) проведения квеста, где можно выполнить бронирование квеста
-export const fetchBookingsAction = createAsyncThunk<Places, string, {
+export const fetchPlacesListAction = createAsyncThunk<Places, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
 >(
-  'booking/fetchPlaces',
+  'booking/fetchPlacesList',
   async(id, { extra: api }) => {
-    const { data } = await api.get<Places>(`${ APIRoute.Places }/${ id }`);
+    const { data } = await api.get<Places>(`/quest/${id}/booking`);
     return data;
   }
 );

@@ -29,6 +29,7 @@ export enum AuthorizationStatus {
 
 export enum NameSpace {
   Quest = 'QUEST',
+  QuestData = 'QUEST_DATA',
   Booking = 'BOOKING',
   Reservation = 'RESERVATION',
   User = 'USER',
@@ -55,3 +56,9 @@ export enum Date {
   Tomorrow = 'tomorrow',
 }
 
+export enum UrlMarker {
+  Default = '/img/svg/pin-default.svg',
+  Active = '/img//svg/pin-active.svg',
+}
+
+export const COORDS_CENTER_MAP: [number, number] = [59.938955, 30.315644];

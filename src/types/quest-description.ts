@@ -1,6 +1,6 @@
 import { Level, Type } from '../const';
 
-export type QuestInfo = {
+export type QuestDescription = {
   id: string;
   title: string;
   previewImg: string;

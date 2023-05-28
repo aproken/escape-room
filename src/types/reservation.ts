@@ -19,3 +19,10 @@ export type Reservation = {
     peopleMinMax: [number, number];
   };
 }
+
+export interface IFormInput {
+  contactPerson: string;
+  phone: string;
+  withChildren: boolean;
+  peopleCount: number;
+}
