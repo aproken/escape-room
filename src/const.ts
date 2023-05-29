@@ -27,6 +27,9 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
+
 export enum NameSpace {
   Quest = 'QUEST',
   QuestData = 'QUEST_DATA',

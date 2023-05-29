@@ -1,14 +1,20 @@
-import { Date } from '../const';
+export enum BookindDate {
+  today = 'today',
+  tomorrow = 'tomorrow'
+}
+
+export type BookingRequest = {
+  date: BookindDate;
+  time: string;
+  contactPerson: string;
+  phone: string;
+  withChildren: boolean;
+  peopleCount: number;
+  placeId: string;
+}
 
 export type BookingData = {
   questId: string;
-  booking: {
-    date: Date;
-    time: string;
-    contactPerson: string;
-    phone: string;
-    withChildren: boolean;
-    peopleCount: number;
-    placeId: string;
-  };
+  booking: BookingRequest;
 }
+

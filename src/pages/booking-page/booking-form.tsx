@@ -1,7 +1,11 @@
 /* eslint-disable no-console */
 import {Place} from '../../types/place';
 import {useForm} from 'react-hook-form';
-import {BookindDate} from '../../types/booking-data';
+import {BookindDate, BookingRequest} from '../../types/booking-data';
+import {useAppDispatch} from '../../hooks';
+import {
+  fetchAddBooking,
+} from '../../store/api-actions';
 
 type BookingFormProps = {
   questId: string;
@@ -14,17 +18,40 @@ interface IFormInput {
   contactPerson: string;
   phone: string;
   withChildren: boolean;
-  peopleCount: number;
+  peopleCount: string;
   placeId: string;
   userAgreement: boolean;
 }
 
+const createBookingRequest = ({
+  date, time, contactPerson, phone, withChildren, peopleCount, placeId
+}: IFormInput): BookingRequest => {
+  const correctPeopleCount = parseInt(peopleCount.toString(), 10);
+  return {
+    date: date === BookindDate.today ? BookindDate.today : BookindDate.tomorrow,
+    time,
+    contactPerson,
+    phone,
+    withChildren,
+    peopleCount: correctPeopleCount,
+    placeId,
+  } as BookingRequest;
+};
+
 export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Element {
-  const {slots} = currentPlace;
-  const {register, handleSubmit } = useForm<IFormInput>();
+  const dispatch = useAppDispatch();
+  const {slots, id} = currentPlace;
+  const {register, handleSubmit} = useForm<IFormInput>();
 
   const formHandler = (data: IFormInput) => {
     console.log(data);
+    const timeParts = data.time.split('_') as [BookindDate, string];
+    data.date = timeParts[0];
+    data.time = timeParts[1];
+    dispatch(fetchAddBooking({
+      questId: questId,
+      booking: createBookingRequest({...data, placeId: id})
+    }));
   };
 
   return (
@@ -52,8 +79,8 @@ export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Elem
                       id={slotId}
                       required
                       value={slotId}
-                      disabled={slot.isAvailable}
-                      {...register('date')}
+                      disabled={!slot.isAvailable}
+                      {...register('time')}
                     />
                     <span className="custom-radio__label">{slot.time}</span>
                   </label>
@@ -78,8 +105,8 @@ export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Elem
                       id={slotId}
                       required
                       value={slotId}
-                      disabled={slot.isAvailable}
-                      {...register('date')}
+                      disabled={!slot.isAvailable}
+                      {...register('time')}
                     />
                     <span className="custom-radio__label">{slot.time}</span>
                   </label>
@@ -93,7 +120,14 @@ export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Elem
         <legend className="visually-hidden">Контактная информация</legend>
         <div className="custom-input booking-form__input">
           <label className="custom-input__label" htmlFor="name">Ваше имя</label>
-          <input {...register('contactPerson')} type="text" id="name" placeholder="Имя" required pattern="[А-Яа-яЁёA-Za-z'- ]{1,}"/>
+          <input
+            {...register('contactPerson')}
+            type="text"
+            id="name"
+            placeholder="Имя"
+            required
+            pattern="[А-Яа-яЁёA-Za-z'- ]{1,}"
+          />
         </div>
         <div className="custom-input booking-form__input">
           <label className="custom-input__label" htmlFor="tel">Контактный телефон</label>
@@ -104,7 +138,7 @@ export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Elem
           <input {...register('peopleCount')} type="number" id="person" placeholder="Количество участников" required/>
         </div>
         <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--children">
-          <input {...register('withChildren')} type="checkbox" id="children" checked/>
+          <input {...register('withChildren')} type="checkbox" id="children"/>
           <span className="custom-checkbox__icon">
             <svg width="20" height="17" aria-hidden="true">
               <use xlinkHref="#icon-tick"></use>

@@ -6,7 +6,7 @@ import { saveToken, dropToken } from '../services/token';
 import { AppRoute, APIRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { BookingData } from '../types/booking-data';
+import {BookingData} from '../types/booking-data';
 import { Quests } from '../types/quest';
 import { QuestDescription } from '../types/quest-description';
 import { Places } from '../types/place';
@@ -61,7 +61,7 @@ export const fetchPlacesListAction = createAsyncThunk<Places, string, {
 );
 
 //Бронирование квеста
-export const fetchAddBooking = createAsyncThunk<BookingData, BookingData, {
+export const fetchAddBooking = createAsyncThunk<Reservation, BookingData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -69,38 +69,38 @@ export const fetchAddBooking = createAsyncThunk<BookingData, BookingData, {
 >(
   'booking/fetchAddBooking',
   async({ questId, booking }, { extra: api }) => {
-    const { data } = await api.post<BookingData>(`${ APIRoute.CurrentQuest }/${ questId }`, booking);
+    const { data } = await api.post<Reservation>(`${ APIRoute.CurrentQuest }/${ questId }/booking`, booking);
     return data;
   }
 );
 
 //Получение информации о бронированиях пользователя
-export const fetchReservationAction = createAsyncThunk<Reservation, undefined, {
+export const fetchReservationAction = createAsyncThunk<Reservation[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
 >(
   'reservation/fetchReservation',
-  async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Reservation>(APIRoute.Reservation);
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Reservation[]>(APIRoute.Reservation);
     return data;
   },
 );
 
 // //Удаление бронирования
-// export const changeReservationStatusAction = createAsyncThunk<void, ReservationData, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'reservation/changeReservationStatusAction',
-//   async ({ questId, ReservationStatusActions }, { dispatch, extra: api }) => {
-//     await api.post<Offer>(`${APIRoute.Favorites}/${questId}/${FavoriteStatus}`);
-//     dispatch(fetchFavoriteOffersAction());
-//     dispatch(fetchOffersAction());
-//   },
-// );
+export const deleteReservationAction = createAsyncThunk<Reservation[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reservation/deleteReservationAction',
+  async (id, { extra: api }) => {
+    await api.delete(`${APIRoute.Reservation}/${id}`);
+    const { data } = await api.get<Reservation[]>(APIRoute.Reservation);
+    return data;
+  },
+);
 
 //Проверка статуса авторизации пользователя
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
