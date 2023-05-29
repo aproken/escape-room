@@ -1,9 +1,10 @@
-import { store } from '../store/index';
+import { store } from '../store';
 import { AuthorizationStatus } from '../const';
 import { UserData } from './user-data';
 import { Quests } from './quest';
 import { QuestDescription } from './quest-description';
 import { Places } from './place';
+import { Reservations } from './reservation';
 
 export type QuestProcess = {
   questsList: Quests;
@@ -24,6 +25,11 @@ export type BookingProcess = {
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
+}
+
+export type ReservationProcess = {
+  reservationsList: Reservations;
+  isReservationsListCompleting: boolean;
 }
 
 export type State = ReturnType<typeof store.getState>;

@@ -6,6 +6,8 @@ import {useAppDispatch} from '../../hooks';
 import {
   fetchAddBooking,
 } from '../../store/api-actions';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 type BookingFormProps = {
   questId: string;
@@ -40,6 +42,7 @@ const createBookingRequest = ({
 
 export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {slots, id} = currentPlace;
   const {register, handleSubmit} = useForm<IFormInput>();
 
@@ -52,6 +55,7 @@ export function BookingForm({questId, currentPlace}: BookingFormProps): JSX.Elem
       questId: questId,
       booking: createBookingRequest({...data, placeId: id})
     }));
+    navigate(AppRoute.Reservation);
   };
 
   return (

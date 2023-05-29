@@ -1,4 +1,5 @@
-import { Date, Level, Type } from '../const';
+import { Date, Level, Type, } from '../const';
+import { Location } from './place';
 
 export type Reservation = {
   date: Date;
@@ -20,9 +21,4 @@ export type Reservation = {
   };
 }
 
-export interface IFormInput {
-  contactPerson: string;
-  phone: string;
-  withChildren: boolean;
-  peopleCount: number;
-}
+export type Reservations = Reservation[];
