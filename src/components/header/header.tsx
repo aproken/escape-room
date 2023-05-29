@@ -22,7 +22,7 @@ function Header (): JSX.Element {
                   <Link className="link" to="/">Квесты</Link>
                 </li>
                 <li className="main-nav__item">
-                  <Link className="link active" to={ AppRoute.Contacts }>Контакты</Link>
+                  <Link className="link" to={ AppRoute.Contacts }>Контакты</Link>
                 </li>
                 <li className="main-nav__item">
                   <Link className="link" to={ AppRoute.Reservation }>Мои бронирования</Link>
